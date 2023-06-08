@@ -1,5 +1,6 @@
 ﻿
 using InternAPI.Interface;
+using InternAPI.Models;
 using InternAPI.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -58,6 +59,30 @@ namespace InternAPI.Controllers
                 return BadRequest("Unable to update");
             }
             return Ok(user);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ICollection<Intern>>> GetAllUser()
+        {
+            var user = await _manageuser.GetAllUser();
+            if (user == null)
+            {
+                return BadRequest("Unable to update");
+            }
+            return Ok(user);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Intern")]
+        public async Task<ActionResult<UserDTO>> UpdateInternPassword(UserDTO userDTO)
+        {
+            var user = await _manageuser.UpdatePassword(userDTO) ?? false ;
+            if (!user)
+            {
+                return BadRequest("Unable to update");
+            }
+            return Ok("Successfully Updated");
         }
     }
 }

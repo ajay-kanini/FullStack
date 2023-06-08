@@ -79,6 +79,26 @@ namespace InternAPI.Services
             }
             return user;
         }
+
+        public async Task<ICollection<Intern>> GetAllUser()
+        {
+            return await _internRepo.GetAll();    
+        }
+
+        public async Task<bool?> UpdatePassword(UserDTO userDTO)
+        {
+            var user = await _userRepo.Get(userDTO.UserId);
+            if (user != null)
+            {
+                var hmac = new HMACSHA512();
+                user.PasswordKey = hmac.Key;
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userDTO.UpdatePassword ?? ""));
+                await _userRepo.Update(user);
+                return true;
+            }
+            return false;
+        }
+
     }
 }
 

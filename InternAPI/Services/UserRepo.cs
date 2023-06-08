@@ -52,9 +52,9 @@ namespace InternAPI.Services
 
         public async Task<ICollection<User>?> GetAll()
         {
-            var users = await _context.Users.ToListAsync();
-            if (users.Count > 0)
-                return users;
+            var interns = await _context.Users.ToListAsync();
+            if (interns.Count > 0)
+                return interns;
             return null;
         }
 
@@ -63,16 +63,16 @@ namespace InternAPI.Services
             var user = await Get(item.UserId);
             if (user != null)
             {
-                //user.Role = item.Role;
-                //user.PasswordHash = item.PasswordHash;
-                //user.PasswordKey = item.PasswordKey;
-                if(user.Status == "Not Approved")
+                user.Role = item.Role;
+                user.PasswordHash = item.PasswordHash;
+                user.PasswordKey = item.PasswordKey;
+                if (user.Status == "Not Approved")
                 {   
-                   user.Status = "Approved";
-                   await _context.SaveChangesAsync();
-                   return user;
-
+                   user.Status = "Approved";                 
                 }
+                await _context.SaveChangesAsync();
+                return user;
+
             }
             return null;
         }

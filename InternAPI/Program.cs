@@ -41,15 +41,17 @@ builder.Services.AddSwaggerGen(c => {
                      }
                  });
 }); 
+
+builder.Services.AddDbContext<UserContext>(opts =>
+{
+    opts.UseSqlServer(builder.Configuration.GetConnectionString("Conn"));
+});
 builder.Services.AddScoped<IRepo<int, User>, UserRepo>();
 builder.Services.AddScoped<IRepo<int, Intern>, InternRepo>();
 builder.Services.AddScoped<IGenerateToken, TokenService>();
 builder.Services.AddScoped<IManageUser, ManageUserService>();
 builder.Services.AddScoped<IGeneratePassword, GeneratePasswordService>();
-builder.Services.AddDbContext<UserContext>(opts =>
-{
-    opts.UseSqlServer(builder.Configuration.GetConnectionString("Conn"));
-});
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(options =>
                {
