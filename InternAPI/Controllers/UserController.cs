@@ -50,7 +50,7 @@ namespace InternAPI.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]     
+       // [Authorize(Roles = "Admin")]     
         public async Task<ActionResult<UserDTO>> ChangeStatus([FromBody] UserDTO userDTO)
         {
             var user = await _manageuser.ChangeStatus(userDTO);
@@ -62,7 +62,7 @@ namespace InternAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<ICollection<Intern>>> GetAllUser()
         {
             var user = await _manageuser.GetAllUser();
@@ -74,15 +74,15 @@ namespace InternAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Intern")]
-        public async Task<ActionResult<UserDTO>> UpdateInternPassword(UserDTO userDTO)
+        //[Authorize(Roles = "Intern")]
+        public async Task<ActionResult<ChangePasswordDTO>> UpdateInternPassword(ChangePasswordDTO changePasswordDTO)
         {
-            var user = await _manageuser.UpdatePassword(userDTO) ?? false ;
+            var user = await _manageuser.UpdatePassword(changePasswordDTO) ?? false ;
             if (!user)
             {
                 return BadRequest("Unable to update");
             }
-            return Ok("Successfully Updated");
+            return Ok(changePasswordDTO);
         }
     }
 }

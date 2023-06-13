@@ -8,8 +8,9 @@ namespace TicketGeneration.Models
         public int ticketId { get; set; }
         public string? ticketTitle { get; set; }
         public string? ticketDescription { get; set; }
-        public DateTime ticketRaisedDate { get; set; }
-        public int internId { get; set; }
+        public DateTime? ticketRaisedDate { get; set; }
+        public string? ticketStatus { get; set; }   
+        public int? internId { get; set; }
 
     }
 }

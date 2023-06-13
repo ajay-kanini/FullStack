@@ -1,5 +1,6 @@
 ﻿using LogDetailsAPI.Interfaces;
 using LogDetailsAPI.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace LogDetailsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("MyCors")]
     public class LogController : ControllerBase
     {
         private readonly IRepo<LogDetails, int> _repo;

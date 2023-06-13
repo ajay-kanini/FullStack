@@ -58,23 +58,22 @@ namespace InternAPI.Services
             return null;
         }
 
-        public async Task<User?> Update(User item)
+        public async Task<User?> Update(User item,int key)
         {
             var user = await Get(item.UserId);
             if (user != null)
             {
-                user.Role = item.Role;
-                user.PasswordHash = item.PasswordHash;
-                user.PasswordKey = item.PasswordKey;
-                if (user.Status == "Not Approved")
-                {   
-                   user.Status = "Approved";                 
-                }
+                user.PasswordHash = item.PasswordHash != null ? item.PasswordHash:user.PasswordHash ;
+                user.PasswordKey = item.PasswordKey != null? item.PasswordKey:user.PasswordKey ;
+                if(key==1)
+                 user.Status="Approved";
                 await _context.SaveChangesAsync();
                 return user;
 
             }
             return null;
         }
+
+
     }
 }

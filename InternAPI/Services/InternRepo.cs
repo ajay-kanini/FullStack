@@ -56,7 +56,7 @@ namespace InternAPI.Services
             return null;
         }
 
-        public async Task<Intern> Update(Intern item)
+        public async Task<Intern> Update(Intern item,int key)
         {
             var user = await Get(item.Id);
             if (user != null)

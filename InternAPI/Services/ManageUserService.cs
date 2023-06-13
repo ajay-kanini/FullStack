@@ -27,7 +27,7 @@ namespace InternAPI.Services
         {
             User user = new User();
             user.UserId = userDTO.UserId;
-            var updateUser = await _userRepo.Update(user);
+            var updateUser = await _userRepo.Update(user,1);
             if(updateUser != null)
             {
                 UserDTO userDTO1 = new UserDTO();   
@@ -85,19 +85,21 @@ namespace InternAPI.Services
             return await _internRepo.GetAll();    
         }
 
-        public async Task<bool?> UpdatePassword(UserDTO userDTO)
+        public async Task<bool?> UpdatePassword(ChangePasswordDTO changePasswordDTO)
         {
-            var user = await _userRepo.Get(userDTO.UserId);
+            var user = await _userRepo.Get(changePasswordDTO.UserId);
             if (user != null)
             {
                 var hmac = new HMACSHA512();
                 user.PasswordKey = hmac.Key;
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(userDTO.UpdatePassword ?? ""));
-                await _userRepo.Update(user);
+                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(changePasswordDTO.Password ?? ""));
+                await _userRepo.Update(user,0);
                 return true;
             }
             return false;
         }
+
+
 
     }
 }

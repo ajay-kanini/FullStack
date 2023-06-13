@@ -8,7 +8,8 @@ namespace InternAPI.Interface
         public Task<UserDTO> Login(UserDTO user);
         public Task<UserDTO> Register(InternDTO intern);
         public Task<UserDTO> ChangeStatus(UserDTO user);
-        public Task<bool?> UpdatePassword(UserDTO userDTO);
+        public Task<bool?> UpdatePassword(ChangePasswordDTO changePasswordDTO);
         public Task<ICollection<Intern>> GetAllUser();
+
     }
 }

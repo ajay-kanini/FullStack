@@ -6,8 +6,8 @@ namespace LogDetailsAPI.Models
     {
         [Key]
         public int logId { get; set; }
-        public DateTime? logInTime { get; set; }
-        public DateTime? logOutTime { get; set; }
+        public string? logInTime { get; set; }
+        public string? logOutTime { get; set; }
         public int internID { get; set; }
     }
 }

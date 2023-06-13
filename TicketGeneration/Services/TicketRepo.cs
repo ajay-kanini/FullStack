@@ -34,7 +34,7 @@ namespace TicketGeneration.Services
 
         public async Task<Tickets?> Delete(int key)
         {
-            var ticket = await Get(key);
+            var ticket = await GetByTicketId(key);
             if (ticket != null)
             {
                 _context.Tickets.Remove(ticket);
@@ -44,7 +44,7 @@ namespace TicketGeneration.Services
             return null;
         }
 
-        public async Task<Tickets?> Get(int key)
+        public async Task<Tickets?> GetByTicketId(int key)
         {
             var ticket = await _context.Tickets.FirstOrDefaultAsync(x => x.ticketId == key);
             return ticket;
@@ -58,17 +58,19 @@ namespace TicketGeneration.Services
 
         public async Task<Tickets?> Update(Tickets item)
         {
-            var ticket = await Get(item.ticketId);
+            var ticket = await GetByTicketId(item.ticketId);
             if (ticket != null)
-            {
-                ticket.ticketId = item.ticketId;          
-                ticket.ticketTitle = item.ticketTitle;
-                ticket.ticketDescription = item.ticketDescription;
-                ticket.ticketRaisedDate = item.ticketRaisedDate;
+            { 
+                ticket.ticketStatus=item.ticketStatus != null ? item.ticketStatus : ticket.ticketStatus;  
                 await _context.SaveChangesAsync();
                 return ticket;
             }
             return null;
+        }
+        public async Task<Tickets?> GetByInternId(int key)
+        {
+            var ticket = await _context.Tickets.FirstOrDefaultAsync(x => x.internId == key);
+            return ticket;
         }
     }
 }

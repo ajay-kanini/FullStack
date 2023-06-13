@@ -60,7 +60,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        };
    });
 
-
+builder.Services.AddCors(opts =>
+{
+    opts.AddPolicy("MyCors", policy =>
+    {
+        policy.AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,6 +78,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("MyCors");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
